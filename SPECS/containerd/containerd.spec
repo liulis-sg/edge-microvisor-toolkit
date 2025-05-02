@@ -4,7 +4,7 @@
 Summary: Industry-standard container runtime
 Name: containerd
 Version: 1.7.13
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: ASL 2.0
 Group: Tools/Container
 URL: https://www.containerd.io
@@ -46,6 +46,28 @@ low-level storage and network attachments, etc.
 containerd is designed to be embedded into a larger system, rather than being
 used directly by developers or end-users.
 
+%package ctr
+Summary:        ctr command line interface
+Requires:       %{name} = %{version}-%{release}
+
+%description ctr
+This package contains ctr binary to provide ctr commandline interface  to containerd
+
+%package stress
+Summary:        stress-testing tool for containerd
+Requires:       %{name} = %{version}-%{release}
+
+%description stress
+This package contains module for debugging and stress-testing tool for containerd
+
+%package shim-runc-v1
+Summary:        containerd runtime shim API v1
+Requires:       %{name} = %{version}-%{release}
+
+%description shim-runc-v1
+This package contains containerd runtime shim API v1
+
+
 %prep
 %autosetup -p1
 
@@ -81,15 +103,32 @@ fi
 
 %files
 %license LICENSE NOTICE
-%{_bindir}/*
-%{_mandir}/*
+%{_bindir}/containerd
+%{_bindir}/containerd-shim
+%{_bindir}/containerd-shim-runc-v2
+%{_mandir}/man5/containerd-config.toml.5.gz
+%{_mandir}/man8/containerd-config.8.gz
+%{_mandir}/man8/containerd.8.gz
 %config(noreplace) %{_unitdir}/containerd.service
 %config(noreplace) %{_sysconfdir}/containerd/config.toml
 %dir /opt/containerd
 %dir /opt/containerd/bin
 %dir /opt/containerd/lib
 
+%files ctr
+%{_bindir}/ctr
+%{_mandir}/man8/ctr.8.gz
+
+%files stress
+%{_bindir}/containerd-stress
+
+%files shim-runc-v1
+%{_bindir}/containerd-shim-runc-v1
+
 %changelog
+* Fri May 02 2025 Lishan Liu <lishan.liu@intel.com> - 1.7.13-8
+- Separate pacakges for ctr, containerd-stress and containerd-runc-shim-v1
+
 * Fri Mar 21 2025 Anuj Mittal <anuj.mittal@intel.com> - 1.7.13-7
 - Bump Release to rebuild
 
