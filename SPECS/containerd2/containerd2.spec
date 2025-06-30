@@ -5,7 +5,7 @@
 Summary: Industry-standard container runtime
 Name: %{upstream_name}2
 Version: 2.0.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: ASL 2.0
 Group: Tools/Container
 URL: https://www.containerd.io
@@ -46,6 +46,20 @@ low-level storage and network attachments, etc.
 containerd is designed to be embedded into a larger system, rather than being
 used directly by developers or end-users.
 
+%package ctr
+Summary:        ctr command line interface
+Requires:       %{name} = %{version}-%{release}
+
+%description ctr
+This package contains ctr binary to provide ctr commandline interface  to containerd
+
+%package stress
+Summary:        stress-testing tool for containerd
+Requires:       %{name} = %{version}-%{release}
+
+%description stress
+This package contains module for debugging and stress-testing tool for containerd
+
 %prep
 %autosetup -p1 -n %{upstream_name}-%{version}
 
@@ -81,13 +95,23 @@ fi
 
 %files
 %license LICENSE NOTICE
-%{_bindir}/*
-%{_mandir}/*
+%{_bindir}/containerd
+%{_bindir}/containerd-shim-runc-v2
+%{_mandir}/man5/containerd-config.toml.5.gz
+%{_mandir}/man8/containerd-config.8.gz
+%{_mandir}/man8/containerd.8.gz
 %config(noreplace) %{_unitdir}/containerd.service
 %config(noreplace) %{_sysconfdir}/containerd/config.toml
 %dir /opt/containerd
 %dir /opt/containerd/bin
 %dir /opt/containerd/lib
+
+%files ctr
+%{_bindir}/ctr
+%{_mandir}/man8/ctr.8.gz
+
+%files stress
+%{_bindir}/containerd-stress
 
 %changelog
 * Fri Apr 28 2025 Ranjan Dutta <ranjan.dutta@intel.com> - 2.0.0-6

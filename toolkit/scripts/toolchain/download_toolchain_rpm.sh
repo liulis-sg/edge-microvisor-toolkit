@@ -165,6 +165,14 @@ function download() {
         log_num=$((log_num + 1))
         attempt_log_file="$log_file.$log_num"
         src_url="$url/$rpm_name"
+        echo "original_src_url is $src_url"
+	# If url contains rpm-edgemicrovisor.intel, change it
+	if [[ "$url" == *"rpm-edgemicrovisor.intel"* ]] || [[ "$url" == *"tiberos-rpms-png-local"* ]]; then
+	  #url="http://10.223.23.237/pulp/content/emt-rpm-test/Packages"
+	  url="http://rpm-emt.intel.com/pulp/content/emt-rpm-test/Packages"
+	  src_url="$url/${rpm_name:0:1}/$rpm_name"
+	fi
+	echo "changed to $src_url"
 
         echo "$src_url -> $attempt_log_file" >> "$log_file"
         { $downloader_tool $cert $key --no-clobber --output-file="$dst_file" --log-file="$attempt_log_file" "$src_url" 1>/dev/null 2>&1 ; res=$? ; } || true
