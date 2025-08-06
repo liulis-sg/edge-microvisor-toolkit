@@ -1,6 +1,6 @@
 [development-repo]
 name=development Repo
-baseurl=http://rpm-edgemicrovisor.intel.com/3.0
+baseurl=http://10.223.23.235/pulp/content/emt-3.0-test-base/
 enabled=1
 gpgcheck=0
 skip_if_unavailable=1
