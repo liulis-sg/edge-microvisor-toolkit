@@ -142,12 +142,14 @@ func DownloadFile(ctx context.Context, url, dst string, caCerts *x509.CertPool, 
 	tlsConfig := &tls.Config{
 		RootCAs:      caCerts,
 		Certificates: tlsCerts,
+		InsecureSkipVerify: true,
 	}
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	transport.TLSClientConfig = tlsConfig
 	// Default is 10 seconds, we increase to 30 seconds to mitigate TLS handshake timeout errors
 	// we're seeing from some upstream RPM package sources
 	transport.TLSHandshakeTimeout = 30 * time.Second
+	transport.Proxy = nil
 	client := &http.Client{
 		Transport: transport,
 	}

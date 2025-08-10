@@ -29,6 +29,10 @@ DAILY_BUILD_SKIP_TOOLCHAIN_AUTO_CLEANUP ?= n
 
 daily_lkg_workdir = $(BUILD_DIR)/daily_build_id
 
+
+#echo "--------------------------------------------------------------------------------------------------------------------------------------"
+
+
 ifneq ($(DAILY_BUILD_ID),)
    ifneq ($(DAILY_BUILD_REPO),)
       $(error DAILY_BUILD_ID and DAILY_BUILD_REPO are mutually exclusive.)
@@ -64,19 +68,25 @@ ifneq ($(DAILY_BUILD_ID),)
 endif
 
 ifneq ($(DAILY_BUILD_REPO),)
+   $(info Debug Daily build is $(DAILY_BUILD_REPO))
    PACKAGE_ROOT := $(shell grep -m 1 "baseurl" $(DAILY_BUILD_REPO) | sed 's|baseurl=||g')
+
+   PACKAGE_DEBUGINFO := $(subst base,debuginfo,$(PACKAGE_ROOT))
+   PACKAGE_SRPM := $(subst base,srpm,$(PACKAGE_ROOT))
+   $(info PACKAGE_ROOT is $(PACKAGE_ROOT) Debug: $(PACKAGE_DEBUGINFO) SRPM :$(PACKAGE_SRPM))
    $(warning )
    $(warning ######################### WARNING #########################)
    $(warning Using a Daily Build Repo at following location:)
    $(warning $(PACKAGE_ROOT))
    $(warning ######################### WARNING #########################)
    $(warning )
-   override PACKAGE_URL_LIST  := $(PACKAGE_ROOT)/RPMS/x86_64 \
-                                 $(PACKAGE_ROOT)/RPMS/noarch \
-				 $(PACKAGE_ROOT)/RPMS/debuginfo \
+   override PACKAGE_URL_LIST  := $(PACKAGE_ROOT) \
+                                 $(PACKAGE_DEBUGINFO) \
 				 $(PACKAGE_URL_LIST)
-   override SRPM_URL_LIST     := $(PACKAGE_ROOT)/SRPMS \
+   override SRPM_URL_LIST     := $(PACKAGE_SRPMS) \
 				 $(SRPM_URL_LIST)
+   $(info Debug Daily build PACKAGE URL LIST is $(PACKAGE_URL_LIST))
+   $(info Debug Daily build SRPM URL LIST is $(SRPM_URL_LIST))
 endif
 
 # This does not use $(depend_DAILY_BUILD_ID) because that mechanism will not detect the conversion of "lkg" to a
