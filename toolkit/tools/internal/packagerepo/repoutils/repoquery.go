@@ -43,9 +43,23 @@ func GetAllRepoData(repoURLs, repoFiles []string, workerTar, buildDir, repoUrlsF
 
 	namesToURLs = make(map[string]string)
 	allPackageURLs := []string{}
+	baseURLs := make(map[string]struct{})
+	for _, url := range repoURLs {
+	    idx := strings.Index(url, "RPMS")
+	    if idx != -1 {
+	        base := strings.TrimRight(url[:idx], "/")
+		logger.Log.Infof("BaseURL extracted from %s is %s \n", url, base)
+		baseURLs[base] = struct{}{}
+	    }
+	}
+	for base := range baseURLs {
+	    logger.Log.Infof(" %s is added to repoURLs\n", base)
+	    repoURLs = append(repoURLs, base)
+	}
 	for _, repoURL := range repoURLs {
 		// Use the chroot to query each repo for the packages it contains
 		var packageRepoURLs []string
+		logger.Log.Infof("getPackageRepoPathsFromUrl from  %s", repoURL)
 		err = queryChroot.Run(func() (chrootErr error) {
 			packageRepoURLs, chrootErr = getPackageRepoPathsFromUrl(repoURL)
 			return chrootErr
@@ -53,6 +67,7 @@ func GetAllRepoData(repoURLs, repoFiles []string, workerTar, buildDir, repoUrlsF
 		if err != nil {
 			return nil, err
 		}
+		logger.Log.Infof("###GetAllRepoData packageRepoURLs is %s", packageRepoURLs)
 		allPackageURLs = append(allPackageURLs, packageRepoURLs...)
 	}
 
