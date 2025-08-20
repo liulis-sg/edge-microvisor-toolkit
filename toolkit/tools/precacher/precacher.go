@@ -86,6 +86,10 @@ func main() {
 	if err != nil {
 		logger.PanicOnError(err)
 	}
+        logger.Log.Infof("### repoUrls: %v", *repoUrls)
+        logger.Log.Infof("### repoFiles: %v", *repoFiles)
+        logger.Log.Infof("### repoUrlsFile: %v", *repoUrlsFile)
+
 
 	logger.Log.Infof("Found %d available packages", len(packagesAvailableFromRepos))
 	if logger.Log.IsLevelEnabled(logrus.DebugLevel) {

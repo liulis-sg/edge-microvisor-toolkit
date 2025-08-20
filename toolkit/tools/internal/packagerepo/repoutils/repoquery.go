@@ -46,6 +46,7 @@ func GetAllRepoData(repoURLs, repoFiles []string, workerTar, buildDir, repoUrlsF
 	for _, repoURL := range repoURLs {
 		// Use the chroot to query each repo for the packages it contains
 		var packageRepoURLs []string
+		logger.Log.Infof("### GetAllRepoData: repoURL is %s", repoURL)
 		err = queryChroot.Run(func() (chrootErr error) {
 			packageRepoURLs, chrootErr = getPackageRepoPathsFromUrl(repoURL)
 			return chrootErr
@@ -53,6 +54,8 @@ func GetAllRepoData(repoURLs, repoFiles []string, workerTar, buildDir, repoUrlsF
 		if err != nil {
 			return nil, err
 		}
+		//logger.Log.Infof("### GetAllRepoData packageRepoURLs is %s", packageRepoURLs)
+		logger.Log.Infof("### GetAllRepoData packageRepoURLs found %d RPMs", len(packageRepoURLs))
 		allPackageURLs = append(allPackageURLs, packageRepoURLs...)
 	}
 

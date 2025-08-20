@@ -161,7 +161,8 @@ function download() {
     fi
 
     log_num=0
-    for url in $url_list; do
+    #for url in $url_list; do
+    for url in $(echo "$url_list" | tr ' ' '\n' | tac); do
         log_num=$((log_num + 1))
         attempt_log_file="$log_file.$log_num"
         src_url="$url/$rpm_name"
@@ -171,7 +172,7 @@ function download() {
 
         if [ $res = 0 ]; then
             echo "Downloaded toolchain RPM: $rpm_name" >> "$attempt_log_file"
-
+            echo "Downloaded $rpm_name from $src_url to $dst_dir"
             echo "SUCCESS" >> "$log_file"
             touch "$dst_file"
             return 0

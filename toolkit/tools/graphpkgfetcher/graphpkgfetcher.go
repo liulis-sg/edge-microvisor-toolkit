@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/microsoft/azurelinux/toolkit/tools/internal/exe"
 	"github.com/microsoft/azurelinux/toolkit/tools/internal/file"
@@ -342,6 +343,7 @@ func downloadAllAvailableDeltaRPMs(realDependencyGraph, dependencyGraphDeltaCopy
 	// For each build node, try to update it to a delta node with a downloaded RPM backing it.
 	logger.Log.Debugf("Resolving build nodes")
 	buildNodes := realDependencyGraph.AllBuildNodes()
+	TotalStartTime := time.Now()
 	for i, n := range buildNodes {
 		// If this node isn't part of the optimized graph, skip it.
 		if _, ok := srpmPaths[n.SrpmPath]; !ok {
@@ -355,11 +357,16 @@ func downloadAllAvailableDeltaRPMs(realDependencyGraph, dependencyGraphDeltaCopy
 			return fmt.Errorf("failed to download delta RPM for build node (%s):\n%w", n, err)
 		}
 		if n.State == pkggraph.StateDelta {
-			logger.Log.Infof("Delta Progress %d%%: delta RPM found for '(%s)-(%s)'", (i*100)/len(buildNodes), n.VersionedPkg.Name, n.VersionedPkg.Version)
+			logger.Log.Infof("Delta Progress %d%%: delta RPM found for '(%s)-(%s)', %dth RPMs", (i*100)/len(buildNodes), n.VersionedPkg.Name, n.VersionedPkg.Version, i)
 		} else {
-			logger.Log.Infof("Delta Progress %d%%: skipped getting delta RPM for (%s) at (%s)", (i*100)/len(buildNodes), n.VersionedPkg.Name, n.RpmPath)
+			logger.Log.Infof("Delta Progress %d%%: skipped getting delta RPM for (%s) at (%s), %dth RPMs", (i*100)/len(buildNodes), n.VersionedPkg.Name, n.RpmPath, i)
 		}
 	}
+	TotalStopTime := time.Now()
+	Totalelapsed  := TotalStopTime.Sub(TotalStartTime)
+	logger.Log.Infof("#### Total Time Used for downloadAllAvailableDeltaRPMs : %v seconds for buildnodes %d \n", Totalelapsed.Seconds(),len( buildNodes))
+	logger.Log.Infof("#### Time Details TotalStartTime: %v TotalStopTime: %v \n", TotalStartTime, TotalStopTime)
+
 
 	return
 }
@@ -423,11 +430,16 @@ func downloadSingleDeltaRPM(realDependencyGraph *pkggraph.PkgGraph, buildNode *p
 	// already have it in the cache.
 	if !foundCacheRPM {
 		// Avoid any processing since we know the exact RPM we want to download
+		clonerstartTime := time.Now()
 		_, err = cloner.CloneByName(downloadDependencies, fullyQualifiedRpmName)
 		if err != nil {
 			logger.Log.Warnf("Can't find delta RPM to download for (%s): (%s) (local copy may be newer than published version)", fullyQualifiedRpmName, err)
 			return nil
 		}
+                clonerstopTime := time.Now()
+                clonerelapsed := clonerstopTime.Sub(clonerstartTime)
+                logger.Log.Infof("### pre-cached delta RPM not found, use cloner to download, Time used: %v, Finding %s \n", clonerelapsed.Seconds(), fullyQualifiedRpmName)
+
 	} else {
 		logger.Log.Debugf("Found pre-cached delta RPM for (%s), skipping download", fullyQualifiedRpmName)
 	}
