@@ -5,11 +5,11 @@
             "MaxSize": 4096,
             "Artifacts": [
                 {
-                    "Name": "edge-readonly-dev",
+                    "Name": "edge-readonly",
                     "Type": "raw"
                 },
                 {
-                    "Name": "edge-readonly-dev",
+                    "Name": "edge-readonly",
                     "Type": "vhd"
                 }
             ],
@@ -65,7 +65,7 @@
             ],
             "PackageLists": [
                 "packagelists/core-packages-image-systemd-boot.json",
-                "packagelists/core-tools-packages.json",
+                "packagelists/fde-verity-package.json",
                 "packagelists/ssh-server.json",
                 "packagelists/virtualization-host-packages.json",
                 "packagelists/agents-packages.json",
@@ -112,19 +112,7 @@
             "OverrideRpmLocales": "NONE",
             "EfiProvider": "systemd-boot",
             "ImmutabilityEnabled": true,
-            "Users": [
-                {
-                    "Name": "root",
-                    "Password": "$6$h06k1YSGP1nz$TVrHZZQS/rf2xo3.gb80GJKkkUzaylHPz/Ofvl/L5seczLeM98man/0zZoY4m.OEuvE2znG2jo909xvIv3FrL1",
-                    "PasswordHashed": true
-                },
-                {
-                    "Name": "guest",
-                    "Password": "$6$6HeEWrlUMlCT$c.NyEBGjE/iVx91gK0Rj83L9K5/HIn.d8MC3c781GRVPd/ZvDFVkIuP8aGZWxyvNDmqdEHjGuUhBC/zZOyAgI0",
-                    "PasswordHashed": true
-                }
-            ]
-
+            "EMTEncryptionEnabled": true
         }
     ]
 }
