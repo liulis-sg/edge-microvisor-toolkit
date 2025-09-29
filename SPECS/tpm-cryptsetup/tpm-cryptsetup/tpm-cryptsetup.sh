@@ -44,6 +44,7 @@ set_part_numbers() {
 select_partition() {
 
     #returns the uuid this script needs to search for to select the rootfs
+    modprobe ahci
     required_part=$( grep -o "boot_uuid=.* " /proc/cmdline | cut -c 11-46 )
 
     rootfs_number=$(blkid | grep -i "$required_part" | grep -v '/dev/mapper' | awk -F ":" '{print substr($1,length($1),1)}')

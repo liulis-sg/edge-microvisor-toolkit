@@ -1,7 +1,7 @@
 Summary:        Full Disk Encryption with DM-verity to ensure confidentiality and integrity
 Name:           tpm-cryptsetup
 Version:        1.0
-Release:        9%{?dist}
+Release:        10%{?dist}
 License:        GPLv2+
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
