@@ -1,7 +1,7 @@
 Summary:        Linux Kernel
 Name:           kernel
 Version:        6.12.44
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        GPLv2
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
