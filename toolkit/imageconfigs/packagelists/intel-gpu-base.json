@@ -1,6 +1,7 @@
 {
     "packages": [
         "kernel-drivers-gpu",
+	"kernel-drivers-sound",
         "linux-firmware-i915",
         "linux-firmware-ice",
         "intel-npu-firmware"
