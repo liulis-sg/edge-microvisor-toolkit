@@ -2,7 +2,7 @@
 # in the end package are expected.
 %define _binaries_in_noarch_packages_terminate_build   0
 %global _firmwarepath  /usr/lib/firmware
-%global _xz_opts -9 --check=crc32
+%global _xz_opts -9 --check=crc64
 
 %global sof_ver 2025.05
 #global sof_ver_pre rc1
@@ -18,7 +18,7 @@
 Summary:        Firmware and topology files for Sound Open Firmware project
 Name:           alsa-sof-firmware
 Version:        %{sof_ver}
-Release:        3%{?dist}
+Release:        5%{?dist}
 License:        BSD-3-Clause AND Apache-2.0
 Distribution:   Edge Microvisor Toolkit
 Vendor:         Intel Corporation
