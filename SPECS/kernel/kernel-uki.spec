@@ -13,7 +13,7 @@
 Summary:        Unified Kernel Image
 Name:           kernel-uki
 Version:        6.17.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
