@@ -5667,7 +5667,8 @@ CONFIG_I2C_HID=m
 #
 # Intel ISH HID support
 #
-# CONFIG_INTEL_ISH_HID is not set
+CONFIG_INTEL_ISH_HID=m
+CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER=m
 # end of Intel ISH HID support
 
 #
