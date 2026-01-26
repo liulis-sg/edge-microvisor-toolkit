@@ -1,7 +1,7 @@
 Summary:        Preempt RT Linux Kernel
 Name:           kernel-rt
 Version:        6.17.11
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
