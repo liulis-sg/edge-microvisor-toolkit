@@ -1,7 +1,7 @@
 Summary:        Linux Kernel
 Name:           kernel
 Version:        6.12.61
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
@@ -920,10 +920,18 @@ make LC_ALL=  ARCH=%{arch} olddefconfig
 # Verify the config files match
 cp .config new_config
 sed -i 's/CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION=""/' new_config
+printf "\n\n\n\n\n\n\n\n"
+printf "-----------------------LLSnewconfigstart--------------------------------"
+cat new_config
+printf "-----------------------LLSnewconfigend-----------------------------------"
+printf "\n\n\n\n\n\n\n\n"
+
 diff --unified new_config current_config > config_diff || true
 if [ -s config_diff ]; then
     printf "\n\n\n\n\n\n\n\n"
+    printf "-----------------------LLSDIFFFFFFFFF--------------------------------"
     cat config_diff
+    printf "-----------------------LLSDIFFFFFENDDDDDDDD------------------------------"
     printf "\n\n\n\n\n\n\n\n"
     echo "Config file has unexpected changes"
     echo "Update config file to set changed values explicitly"
