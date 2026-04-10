@@ -265,3 +265,4 @@ audit-3.1.2-1.emt26.x86_64.rpm
 audit-libs-3.1.2-1.emt26.x86_64.rpm
 libxcrypt-4.4.36-2.emt26.x86_64.rpm
 libxcrypt-devel-4.4.36-2.emt26.x86_64.rpm
+libpcre2-8-0-10.42-3.emt26.x86_64.rpm
