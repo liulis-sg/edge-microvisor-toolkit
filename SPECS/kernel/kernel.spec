@@ -1,7 +1,7 @@
 Summary:        Linux Kernel
 Name:           kernel
 Version:        6.18.15
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
