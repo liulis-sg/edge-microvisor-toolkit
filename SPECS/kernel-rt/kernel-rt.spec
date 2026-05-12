@@ -1,7 +1,7 @@
 Summary:        Preempt RT Linux Kernel
 Name:           kernel-rt
 Version:        6.12.80
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2
 Vendor:         Intel Corporation
 Distribution:   Edge Microvisor Toolkit
@@ -411,7 +411,6 @@ Patch10018: 0013-drm-i915-gt-Isolate-single-sysfs-engine-file-creation.drm
 Patch10019: 0014-drm-i915-gt-Implement-creation-and-removal-routines-fo.drm
 Patch10020: 0015-drm-i915-gt-Allow-the-user-to-change-the-CCS-mode-thro.drm
 Patch10021: 0016-drm-i915-gt-Refactor-CCS-mode-handling-and-improve-app.drm
-Patch10022: 0017-drm-i915-no-waiting-for-page-flip-in-vpp-case.drm
 Patch10023: 0001-Remove-unneeded-files.patch
 Patch10024: 0001-i915-gt-Upgrade-GuC-70.44.1-70.49.4.drm
 Patch10025: 0001-drm-i915-no-force-probe-needed-for-mtl-platform.drm
